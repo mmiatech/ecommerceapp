@@ -1,6 +1,6 @@
 {
     "identityPoolName": "ecommerceapp0d70a185_identitypool_0d70a185",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "ecomme0d70a185",
     "userPoolName": "ecommerceapp0d70a185_userpool_0d70a185",
     "autoVerifiedAttributes": [
