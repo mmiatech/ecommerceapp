@@ -5,36 +5,56 @@ import { HomeOutlined, UserOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Hub } from 'aws-amplify';
 import checkUser from './checkUser';
 
-const Nav = (props) => {
-  const { current } = props;
+const Nav = ({ current }) => {
   const [user, updateUser] = useState({});
-  useEffect(() => {
-    checkUser(updateUser)
-    Hub.listen('auth', (data) => {
-      const { payload: { event } } = data;
-      console.log('event: ', event)
-      if (event === 'signIn' || event === 'signOut') checkUser(updateUser)
-    });
-  }, []);
+
+  useEffect(
+    () => {
+      checkUser(updateUser);
+
+      Hub.listen(
+        'auth'
+        , (data) => {
+          // complex destructuring again- data.payload.event
+          const { payload: { event } } = data;
+          console.log('event: ', event);
+          
+          if (event === 'signIn' || event === 'signOut') {
+            checkUser(updateUser)
+          };
+        }
+      );
+    }
+    , []
+  );
 
   return (
     <div>
-      <Menu selectedKeys={[current]} mode="horizontal">
+      <Menu
+        selectedKeys={[current]}
+        mode="horizontal"
+      >
         <Menu.Item key='home'>
           <Link to={`/`}>
-            <HomeOutlined />Home
+            <HomeOutlined />
+            Home
           </Link>
         </Menu.Item>
+
         <Menu.Item key='profile'>
           <Link to='/profile'>
-            <UserOutlined />Profile
+            <UserOutlined />
+            Profile
           </Link>
         </Menu.Item>
+
         {
-          user.isAuthorized && (
+          user.isAuthorized
+          && (
             <Menu.Item key='admin'>
               <Link to='/admin'>
-                <ProfileOutlined />Admin
+                <ProfileOutlined />
+                Admin
               </Link>
             </Menu.Item>
           )
@@ -42,6 +62,6 @@ const Nav = (props) => {
       </Menu>
     </div>
   );
-}
+};
 
 export default Nav;
