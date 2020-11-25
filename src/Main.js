@@ -4,33 +4,68 @@ import { API } from 'aws-amplify';
 import { List } from 'antd';
 import checkUser from './checkUser';
 
-function Main() {
-  const [state, setState] = useState({products: [], loading: true})
-  const [user, updateUser] = useState({})
-  let didCancel = false
-  useEffect(() => {
-    getProducts()
-    checkUser(updateUser)
-    return () => didCancel = true
-  }, [])
-  async function getProducts() {
-    const data = await API.get('ecommerceapi', '/products')
-    console.log('data: ', data)
-    if (didCancel) return
+const Main = () => {
+  const [state, setState] = useState({
+    products: []
+    , loading: true
+  });
+
+  const [user, updateUser] = useState({});
+
+  let didCancel = false;
+
+  useEffect(
+    () => {
+      getProducts();
+      checkUser(updateUser);
+      return () => didCancel = true;
+    }
+    , []
+  );
+
+  const getProducts = async () => {
+    const data = await API.get(
+      'ecommerceapi'
+      , '/products'
+    );
+
+    console.log('data: ', data);
+
+    if (didCancel) return;
+
     setState({
-      products: data.data.Items, loading: false
-    })
+      products: data.data.Items
+      , loading: false
+    });
   }
-  async function deleteItem(id) {
+
+  const deleteItem = async (id) => {
     try {
-      const products = state.products.filter(p => p.id !== id)
-      setState({ ...state, products })
-      await API.del('ecommerceapi', '/products', { body: { id } })
-      console.log('successfully deleted item')
+      const products = state.products.filter(p => p.id !== id);
+
+      // updating local component state, removing the item, before its deleted- optimistic
+      setState({
+        ...state
+        , products //products: products
+      });
+
+      await API.del(
+        'ecommerceapi'
+        , '/products'
+        , {
+          body: {
+            id // id: id
+          }
+          }
+      );
+
+      console.log('successfully deleted item');
+
     } catch (err) {
-      console.log('error: ', err)
+      console.log(err);
     }
   }
+
   return (
     <Container>
       <List
@@ -39,9 +74,14 @@ function Main() {
         loading={state.loading}
         renderItem={item => (
           <List.Item
-            actions={user.isAuthorized ?
-              [<p onClick={() => deleteItem(item.id)}
-              key={item.id}>delete</p>] : null}
+            actions={user.isAuthorized
+              ? [<p
+                  onClick={() => deleteItem(item.id)}
+                  key={item.id}
+                >
+                  delete
+                </p>]
+              : null}
           >
             <List.Item.Meta
               title={item.name}
