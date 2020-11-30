@@ -23,7 +23,7 @@ const AWS = require('aws-sdk');
 const { v4: uuid } = require('uuid');
 
 /* Cognito SDK */
-const cognito = new;
+const cognito = new
 AWS.CognitoIdentityServiceProvider({
   apiVersion: '2016-04-18'
 });
