@@ -72,23 +72,27 @@ const Main = () => {
         itemLayout="horizontal"
         dataSource={state.products}
         loading={state.loading}
-        renderItem={item => (
-          <List.Item
-            actions={user.isAuthorized
-              ? [<p
-                  onClick={() => deleteItem(item.id)}
-                  key={item.id}
-                >
-                  delete
-                </p>]
-              : null}
-          >
-            <List.Item.Meta
-              title={item.name}
-              description={item.price}
-            />
-          </List.Item>
-        )}
+        renderItem={
+          item => (
+            <List.Item
+              actions={user.isAuthorized
+                ? [
+                  <p
+                    onClick={() => deleteItem(item.id)}
+                    key={item.id}
+                  >
+                    delete
+                  </p>
+                ]
+                : null}
+            >
+              <List.Item.Meta
+                title={item.name}
+                description={item.price}
+              />
+            </List.Item>
+          )
+        }
       />
     </Container>
   )

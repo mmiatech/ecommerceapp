@@ -5,11 +5,7 @@ const checkUser = async (updateUser) => {
   try {
     const userData = await Auth.currentSession();
 
-    if (!userData) {
-      console.log('userData: ', userData);
-      updateUser({});
-      return;
-    }
+    console.log(userData);
 
     console.log(userData);
     //complexx destructuring, could use userData.idToken.payload, would be used in angular
@@ -28,6 +24,7 @@ const checkUser = async (updateUser) => {
 
   catch (err) {
     console.error(err);
+    updateUser({});
   }
 
   
