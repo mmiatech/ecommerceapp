@@ -60,6 +60,9 @@ const Nav = ({ current }) => {
           )
         }
       </Menu>
+      <h3>
+        {user.username}
+      </h3>
     </div>
   );
 };
