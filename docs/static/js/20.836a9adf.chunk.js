@@ -1,0 +1,2 @@
+(this.webpackJsonpecommerceapp=this.webpackJsonpecommerceapp||[]).push([[20],{558:function(e,t,n){"use strict";n.r(t),n.d(t,"amplify_container",(function(){return i}));var c=n(29),i=function(){function e(e){Object(c.k)(this,e)}return e.prototype.render=function(){return Object(c.i)(c.b,null,Object(c.i)("slot",null))},e}();i.style=":host{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;height:100vh}"}}]);
+//# sourceMappingURL=20.836a9adf.chunk.js.map
